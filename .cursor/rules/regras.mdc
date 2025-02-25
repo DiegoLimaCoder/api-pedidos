@@ -1,0 +1,83 @@
+---
+description: 
+globs: 
+---
+Segue um fluxo organizado que você deve seguir ao desenvolver uma API com NestJS, incorporando as diretrizes de qualidade, separação de responsabilidades e segurança:
+
+---
+
+### 1. Análise e Planejamento
+- Responda sempre em português (pt-BR)
+
+- **Requisitos e Escopo:**  
+  Levante os requisitos da API e defina os objetivos do projeto.
+- **Definição da Arquitetura:**  
+  Planeje a separação em módulos, controllers, services e repositórios, garantindo responsabilidades únicas em cada camada.
+- **Pesquisa de Soluções Existentes:**  
+  Verifique bibliotecas e ferramentas do ecossistema NestJS que possam ser aproveitadas, evitando reinventar a roda.
+
+---
+
+### 2. Configuração Inicial do Projeto
+- **Criação e Estruturação:**  
+  Utilize a CLI do NestJS para gerar o projeto e organize a estrutura de pastas conforme os módulos e suas responsabilidades.
+- **Versionamento e Backup:**  
+  Configure o Git (ou outro VCS) para controlar as alterações, garantindo a possibilidade de rollback caso algum impacto indesejado ocorra.
+
+---
+
+### 3. Implementação das Funcionalidades
+- **Avaliação de Impacto:**  
+  Antes de modificar qualquer arquivo, identifique quais arquivos serão afetados para evitar quebras ou inconsistências na aplicação.
+- **Desenvolvimento Modular:**  
+  Implemente funcionalidades seguindo a divisão por módulos, assegurando que cada componente tenha uma responsabilidade clara e bem definida.
+- **Aproveitamento de Soluções Prontas:**  
+  Sempre que possível, utilize bibliotecas já existentes em vez de desenvolver soluções do zero.
+
+---
+
+### 4. Integração de Medidas de Segurança
+- **Validação e Sanitização:**  
+  Utilize *class-validator* e técnicas de sanitização para garantir que apenas dados válidos sejam processados, evitando injeções e ataques XSS.
+- **Configuração de Cabeçalhos de Segurança:**  
+  Implemente o middleware *Helmet* para definir cabeçalhos HTTP que protejam contra diversas vulnerabilidades.
+- **Política de CORS Restritiva:**  
+  Configure o CORS para permitir apenas domínios confiáveis acessarem a API.
+- **Autenticação e Autorização:**  
+  Adote métodos robustos (como JWT ou OAuth) e implemente controle de acesso baseado em papéis (RBAC) para proteger endpoints críticos.
+- **Proteção Contra Ataques de Força Bruta:**  
+  Configure rate limiting para evitar tentativas repetitivas de acesso indevido.
+- **Acesso Seguro ao Banco de Dados:**  
+  Utilize consultas parametrizadas ou um ORM (como TypeORM ou Sequelize) para prevenir injeções de SQL.
+
+---
+
+### 5. Testes e Validação
+- **Testes Automatizados:**  
+  Implemente testes unitários e de integração para garantir que as funcionalidades se comportem conforme o esperado.
+- **Testes de Segurança:**  
+  Realize testes de penetração e verifique logs de atividades suspeitas para identificar possíveis vulnerabilidades.
+- **Ambiente de Staging:**  
+  Valide todas as alterações em um ambiente controlado antes de promover para produção.
+
+---
+
+### 6. Documentação e Comunicação
+- **Comentários e Documentação:**  
+  Explique detalhadamente a lógica implementada em cada módulo, utilizando comentários no código e documentação adicional para facilitar o entendimento, especialmente para desenvolvedores juniores.
+- **Explicação das Alterações:**  
+  Sempre que uma modificação for realizada, documente quais arquivos foram alterados, o porquê da mudança e como ela impacta a aplicação.
+- **Revisões de Código:**  
+  Incentive revisões cruzadas para validar a clareza, a segurança e a consistência do código.
+
+---
+
+### 7. Manutenção e Atualizações Contínuas
+- **Monitoramento de Dependências:**  
+  Mantenha todas as dependências atualizadas, utilizando ferramentas como *npm audit* ou *Snyk* para monitorar vulnerabilidades.
+- **Refatoração e Melhorias:**  
+  Realize revisões periódicas para identificar oportunidades de refatoração, garantindo que o código permaneça modular, seguro e de fácil manutenção.
+- **Feedback Iterativo:**  
+  Documente e compartilhe feedback sobre cada etapa do desenvolvimento para ajustar processos e garantir que as diretrizes sejam seguidas corretamente.
+
+---
