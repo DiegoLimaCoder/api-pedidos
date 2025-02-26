@@ -1,0 +1,12 @@
+@baseUrl = http://localhost:3000
+
+
+### Create User
+POST {{baseUrl}}/auth/register
+Content-Type: application/json
+
+{
+    "name": "Diego Lima",
+    "email": "diegogoncalvesreisdelima21@gmail.com",
+    "password": "Password123"
+}
