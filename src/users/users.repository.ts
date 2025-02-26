@@ -20,4 +20,25 @@ export class UsersResitory {
       },
     });
   }
+
+  async findByToken(token: string): Promise<User | null> {
+    return await this.prisma.user.findUnique({
+      where: {
+        emailVerificationToken: token,
+      },
+    });
+  }
+
+  async verifyEmail(token: string): Promise<User> {
+    return await this.prisma.user.update({
+      where: {
+        emailVerificationToken: token,
+      },
+      data: {
+        emailVerified: true,
+        emailVerificationToken: null,
+        emailVerificationExpires: null,
+      },
+    });
+  }
 }

@@ -28,7 +28,7 @@ export class MailService {
 
   async sendUserConfirmation(email: string, name: string, token: string) {
     try {
-      const confirmationUrl = `http://localhost:3000/verify-email?token=${token}`;
+      const confirmationUrl = `http://localhost:3000/auth/verify-email?token=${token}`;
 
       const htmlContent = await this.compileTemplate('email-confirmation', {
         name,

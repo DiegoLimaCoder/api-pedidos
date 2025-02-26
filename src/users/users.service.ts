@@ -51,4 +51,24 @@ export class UsersService {
     const { password, emailVerificationToken, ...result } = newUser;
     return result;
   }
+
+  async verifyEmail(token: string) {
+    const user = await this.usersRepository.findByToken(token);
+
+    if (!user) {
+      throw new BadRequestException('Token inválido.');
+    }
+
+    if (!user.emailVerificationExpires) {
+      throw new BadRequestException(
+        'Token inválido: data de expiração não encontrada.',
+      );
+    }
+
+    if (user.emailVerificationExpires < new Date()) {
+      throw new BadRequestException('Token expirado.');
+    }
+
+    return await this.usersRepository.verifyEmail(token);
+  }
 }

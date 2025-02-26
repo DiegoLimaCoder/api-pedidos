@@ -10,3 +10,7 @@ Content-Type: application/json
     "email": "diegogoncalvesreisdelima21@gmail.com",
     "password": "Password123"
 }
+
+### Confirm User
+GET {{baseUrl}}/auth/verify-email?=256738ea-64f3-40de-9e64-341db7a98275
+Content-Type: application/json
