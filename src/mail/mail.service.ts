@@ -3,13 +3,17 @@ import { Resend } from 'resend';
 import * as handlebars from 'handlebars';
 import * as fs from 'fs';
 import * as path from 'path';
+import { ConfigService } from '@nestjs/config';
+import { EnvironmentConfig } from 'src/config/configuration';
 
 @Injectable()
 export class MailService {
   private resend: Resend;
 
-  constructor() {
-    this.resend = new Resend(process.env.RESEND_API_KEY);
+  constructor(
+    private readonly configService: ConfigService<EnvironmentConfig, true>,
+  ) {
+    this.resend = new Resend(this.configService.get('resendApiKey'));
   }
 
   private async compileTemplate(templateName: string, data: any) {
