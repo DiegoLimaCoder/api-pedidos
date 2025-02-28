@@ -18,11 +18,14 @@ model User {
   email                    String    @unique
   password                 String
   name                     String
-  emailVerified            Boolean   @default(false) // Verifica se o email foi verificado
-  emailVerificationToken   String?   @unique // Token para verificar o email
-  emailVerificationExpires DateTime? // Data de expiração do token
-  refreshToken             String?   @unique // Token para atualizar o token
-  refreshTokenExpires      DateTime? // Data de expiração do token
+  emailVerified            Boolean   @default(false)
+  emailVerificationToken   String?   @unique
+  emailVerificationExpires DateTime?
+  passwordResetToken       String?   @unique // Novo campo
+  passwordResetExpires     DateTime? // Novo campo
+  passwordResetCode        String?
+  refreshToken             String?   @unique
+  refreshTokenExpires      DateTime?
   createdAt                DateTime  @default(now())
   updatedAt                DateTime  @updatedAt
 
