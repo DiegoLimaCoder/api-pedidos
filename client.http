@@ -48,3 +48,9 @@ Content-Type: application/json
 ### Refresh Token
 POST {{baseUrl}}/auth/refresh
 Content-Type: application/json
+
+
+
+### TESTE (Execute após o login)
+GET {{baseUrl}}/auth/teste
+Content-Type: application/json
