@@ -33,3 +33,18 @@ Content-Type: application/json
   "code": "620316",
   "password": "Password12345"
 }
+
+
+###  Authenticate
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "diegogoncalvesreisdelima21@gmail.com",
+  "password": "Password123"
+}
+
+
+### Refresh Token
+POST {{baseUrl}}/auth/refresh
+Content-Type: application/json

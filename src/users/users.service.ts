@@ -4,7 +4,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UsersResitory } from './users.repository';
+import { usersRepository } from './users.repository';
 import { hash } from 'bcrypt';
 import { MailService } from '../mail/mail.service';
 import { v4 as uuidv4 } from 'uuid';
@@ -12,7 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 @Injectable()
 export class UsersService {
   constructor(
-    private usersRepository: UsersResitory,
+    private usersRepository: usersRepository,
     private mailService: MailService,
   ) {}
 

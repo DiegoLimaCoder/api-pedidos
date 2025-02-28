@@ -4,7 +4,7 @@ import { Prisma, User } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
-export class UsersResitory {
+export class usersRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(data: Prisma.UserCreateInput): Promise<User> {
@@ -80,6 +80,28 @@ export class UsersResitory {
         passwordResetCode: null,
         passwordResetExpires: null,
       },
+    });
+  }
+
+  // Refresh Token
+
+  async updateRefreshToken(
+    userId: string,
+    refreshToken: string,
+    refreshTokenExpires: Date,
+  ) {
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        refreshToken,
+        refreshTokenExpires,
+      },
+    });
+  }
+
+  async findByRefreshToken(refreshToken: string) {
+    return this.prisma.user.findUnique({
+      where: { refreshToken },
     });
   }
 }
