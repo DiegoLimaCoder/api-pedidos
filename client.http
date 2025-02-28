@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:3000
+@baseUrl = http://localhost:8080
 
 
 ### Create User
@@ -12,5 +12,24 @@ Content-Type: application/json
 }
 
 ### Confirm User
-GET {{baseUrl}}/auth/verify-email?=256738ea-64f3-40de-9e64-341db7a98275
+GET {{baseUrl}}/auth/verify-email?token=f2499f1e-346b-41e8-97d5-84b5b3a0295d
 Content-Type: application/json
+
+
+### forgot password
+POST {{baseUrl}}/auth/forgot-password
+Content-Type: application/json
+
+{
+  "email": "diegogoncalvesreisdelima21@gmail.com"
+}
+
+
+### reset password
+POST {{baseUrl}}/auth/reset-password/891b439e-ca56-4aff-8ea2-eb37992d93a5
+Content-Type: application/json
+
+{
+  "code": "620316",
+  "password": "Password12345"
+}

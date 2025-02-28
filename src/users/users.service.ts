@@ -31,6 +31,8 @@ export class UsersService {
     const tokenExpiration = new Date();
     tokenExpiration.setHours(tokenExpiration.getHours() + 24);
 
+    console.log('token salvo no banco de dados', verificationToken);
+
     const newUser = await this.usersRepository.create({
       ...createUserDto,
       password: hashedPassword,
@@ -70,5 +72,73 @@ export class UsersService {
     }
 
     return await this.usersRepository.verifyEmail(token);
+  }
+
+  async forgotPassword(email: string) {
+    // Verificar se o email existe no banco de dados
+    const user = await this.usersRepository.findByEmail(email);
+
+    // Por segurança, não revelamos se o email existe ou não
+    if (!user) {
+      return {
+        message:
+          'Se o email existir, você receberá as instruções de recuperação.',
+      };
+    }
+
+    // Gerar um token de redefinição de senha
+    const resetToken = uuidv4();
+
+    // Gerar um código de verificação de 6 dígitos
+    const verificationCode = Math.floor(
+      100000 + Math.random() * 900000,
+    ).toString();
+
+    // Definir a data de expiração do token para 1 hora a partir do momento atual
+    const tokenExpiration = new Date();
+    tokenExpiration.setHours(tokenExpiration.getHours() + 1);
+
+    // Atualizar o token e a data de expiração no banco de dados
+    await this.usersRepository.updateResetToken(user.id, {
+      passwordResetToken: resetToken,
+      passwordResetExpires: tokenExpiration,
+      passwordResetCode: verificationCode,
+    });
+
+    await this.mailService.sendPasswordReset(
+      email,
+      user.name,
+      resetToken,
+      verificationCode,
+    );
+
+    return {
+      message:
+        'Se o email existir, você receberá as instruções de recuperação.',
+    };
+  }
+
+  async resetPassword(token: string, code: string, password: string) {
+    const user = await this.usersRepository.findByResetToken(token);
+
+    if (!user) {
+      throw new BadRequestException('Token inválido.');
+    }
+
+    if (!user.passwordResetExpires || user.passwordResetExpires < new Date()) {
+      throw new BadRequestException('Token expirado.');
+    }
+
+    // Verificar se o código fornecido corresponde ao código armazenado
+    if (user.passwordResetCode !== code) {
+      throw new BadRequestException('Código de verificação inválido.');
+    }
+
+    const hashedPassword = await hash(password, 10);
+
+    await this.usersRepository.updatePassword(user.id, hashedPassword);
+    return {
+      message: 'Senha redefinida com sucesso.',
+    };
   }
 }
