@@ -15,6 +15,13 @@ async function bootstrap() {
     }),
   );
 
+  // Habilitando CORS
+  app.enableCors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  });
+
   // pega a configuração do arquivo .env
   const configService =
     app.get<ConfigService<EnvironmentConfig, true>>(ConfigService);
