@@ -6,6 +6,8 @@ export interface EnvironmentConfig {
   nodeEnv: string;
   resendApiKey: string;
   databaseUrl: string;
+  jwtSecret: string;
+  jwtRefreshSecret: string;
 }
 
 const configuration: ConfigFactory<EnvironmentConfig> = () => {
@@ -16,6 +18,8 @@ const configuration: ConfigFactory<EnvironmentConfig> = () => {
     nodeEnv: config.value.NODE_ENV || 'development',
     resendApiKey: config.value.RESEND_API_KEY,
     databaseUrl: config.value.DATABASE_URL,
+    jwtSecret: config.value.JWT_SECRET,
+    jwtRefreshSecret: config.value.JWT_REFRESH_SECRET,
   };
 };
 export default configuration;
