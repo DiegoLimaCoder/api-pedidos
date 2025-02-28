@@ -32,8 +32,8 @@ export class MailService {
 
   async sendUserConfirmation(email: string, name: string, token: string) {
     try {
-      const confirmationUrl = `http://localhost:3000/auth/verify-email?token=${token}`;
-
+      const confirmationUrl = `http://localhost:8080/auth/verify-email?token=${token}`;
+      console.log('Token:', token);
       const htmlContent = await this.compileTemplate('email-confirmation', {
         name,
         confirmationUrl,
@@ -54,6 +54,38 @@ export class MailService {
       return data;
     } catch (error) {
       console.error('Error sending email:', error);
+      throw error;
+    }
+  }
+
+  async sendPasswordReset(
+    email: string,
+    name: string,
+    token: string,
+    code: string,
+  ) {
+    try {
+      const resetURL = `http://localhost:8080/auth/reset-password/${token}`;
+      const htmlContent = await this.compileTemplate('password-reset', {
+        name,
+        resetURL,
+        code,
+      });
+      const { data, error } = await this.resend.emails.send({
+        from: 'Acme <onboarding@resend.dev>',
+        to: email,
+        subject: 'Redefina sua senha',
+        html: htmlContent,
+      });
+
+      if (error) {
+        console.error('Error sending password reset email:', error);
+        throw error;
+      }
+
+      return data;
+    } catch (error) {
+      console.error('Error sending password reset email:', error);
       throw error;
     }
   }
